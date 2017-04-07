@@ -315,8 +315,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3fc7f83ed2900be41b4513eea6557527, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  laserDistance: 10
+  start: {fileID: 38028297}
+  laserDistance: 3
   laserTime: 1
+  laserWidth: 1
+  startPos: {x: 0, y: 0, z: 0}
+  targetPos: {x: 0, y: 0, z: 0}
 --- !u!120 &1566208577
 LineRenderer:
   m_ObjectHideFlags: 0
