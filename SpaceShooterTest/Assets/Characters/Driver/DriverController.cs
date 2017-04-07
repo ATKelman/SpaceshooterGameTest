@@ -40,7 +40,5 @@ public class DriverController : MonoBehaviour
         if (moveLeft && moveRight)
             GetComponent<Rigidbody2D>().AddForce(transform.up * forwardSpeed * forwardMultiplier);
 
-
-
     }
 }
