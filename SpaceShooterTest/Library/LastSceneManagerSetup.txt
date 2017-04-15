@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/Scenes/KelmanTestScene01.unity
+- path: Assets/Scenes/Kelman_ClientTest.unity
   isLoaded: 1
   isActive: 1
