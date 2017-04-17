@@ -35,7 +35,7 @@ public class Client : MonoBehaviour
     private string playerName;
 
     public GameObject playerPrefab;
-    public List<Player> players = new List<Player>();
+    public Dictionary<int, Player> players = new Dictionary<int, Player>();
 
     public void Connect()
     {
@@ -94,7 +94,7 @@ public class Client : MonoBehaviour
                         SpawnPlayer(splitData[1], int.Parse(splitData[2]));
                         break;
                     case "DC":
-
+                        PlayerDisconnected(int.Parse(splitData[1]));
                         break;
                     default:
                         Debug.Log("Invalid message : " + msg);
@@ -129,6 +129,8 @@ public class Client : MonoBehaviour
         if(cnnId == ourClientId)
         {
             // Add mobility
+            go.AddComponent<CharacterMovement>();
+
             // Remove Canvas
             GameObject.Find("Canvas").SetActive(false);
             print("Deactivating canvas");
@@ -140,7 +142,12 @@ public class Client : MonoBehaviour
         p.playerName = playerName;
         p.connectionId = cnnId;
         p.avatar.GetComponentInChildren<TextMesh>().text = playerName;
-        players.Add(p);
+        players.Add(cnnId, p);
+    }
+    private void PlayerDisconnected(int cnnId)
+    {
+        Destroy(players[cnnId].avatar);
+        players.Remove(cnnId);
     }
 
     private void Send(string message, int channelId)

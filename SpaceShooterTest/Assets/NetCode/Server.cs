@@ -76,7 +76,7 @@ public class Server : MonoBehaviour
 
                         break;
                     case "DC":
-
+                        OnDisconnection(connectionId);
                         break;
                     default:
                         Debug.Log("Invalid message : " + msg);
@@ -85,6 +85,7 @@ public class Server : MonoBehaviour
 
                 break;
             case NetworkEventType.DisconnectEvent:  // 4
+                OnDisconnection(connectionId);
                 Debug.Log("Player " + connectionId + " has disconnected");
                 break;
         }
@@ -108,6 +109,15 @@ public class Server : MonoBehaviour
 
         // ASKNAME|ID|NAME%ID|TEMP%ID - TEMP is oneself / NAME is other players, can be multiple
         Send(msg, reliableChannel, cnnId);
+    }
+    private void OnDisconnection(int cnnId)
+    {
+        // Remove this player from client list
+        clients.Remove(clients.Find(x => x.connectionId == cnnId));
+
+        // Tell everyone that somebody else has disconnected
+        Send("DC|" + cnnId, reliableChannel, clients);
+        Debug.Log("sending disconnection message");
     }
 
     private void OnNameIs(int cnnId, string playerName)
